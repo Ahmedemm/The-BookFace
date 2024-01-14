@@ -1,20 +1,34 @@
 // FeedPage.js
-import React from 'react';
 
-import { Container, Paper, Typography, TextField, Button, Avatar, Divider } from '@mui/material';
+import {
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Avatar,
+  Divider,
+} from "@mui/material";
+import Likes from "./likes";
+import FollowButton from "./follow";
 
 const posts = [
   {
     id: 1,
-    username: 'JohnDoe',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. #React #WebDev',
+    username: "JohnDoe",
+    likes: ["JohnDoe", "JaneSmith"],
+    isFollowing: true,
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. #React #WebDev",
   },
   {
     id: 2,
-    username: 'JaneSmith',
-    content: 'Just launched my new website! Check it out at example.com 🚀 #WebDevelopment',
+    username: "JaneSmith",
+    likes: ["John Deer", "Jane Smack"],
+    isFollowing: false,
+    content:
+      "Just launched my new website! Check it out at example.com 🚀 #WebDevelopment",
   },
-
 ];
 
 const FeedPage = () => {
@@ -37,15 +51,17 @@ const FeedPage = () => {
         <Button variant="contained" color="primary" style={{ marginTop: 10 }}>
           Poster
         </Button>
-        <Divider style={{ margin: '20px 0' }} />
+        <Divider style={{ margin: "20px 0" }} />
         {posts.map((post) => (
           <div key={post.id} style={{ marginBottom: 20 }}>
             <Avatar style={{ marginRight: 10 }}>{post.username[0]}</Avatar>
             <div>
-              <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
+              <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
                 {post.username}
               </Typography>
               <Typography variant="body1">{post.content}</Typography>
+              <Likes likes={post.likes} />
+              <FollowButton onFollow={() => {}} isFollowing={post.isFollowing} />
             </div>
           </div>
         ))}
