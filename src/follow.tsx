@@ -1,20 +1,25 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; // à supprimer dès que le lien avec l'api est fait, sinon double emploi
 
 interface FollowButtonProps {
   onFollow: () => void; // Fonction appelée lors du clic sur le bouton de suivi
+  isFollowing: boolean;
 }
 
-const FollowButton: React.FC<FollowButtonProps> = ({ onFollow }) => {
-  const [isFollowing, setIsFollowing] = useState(false);
+const FollowButton: React.FC<FollowButtonProps> = ({
+  isFollowing,
+  onFollow,
+}) => {
+  // le state local pourra être enlevé plus tard à priori
+  const [isFollow, setIsFollowing] = useState(isFollowing);
 
   const handleFollowClick = () => {
-    setIsFollowing(!isFollowing);
+    setIsFollowing(!isFollow);
     onFollow();
   };
 
   return (
     <button onClick={handleFollowClick}>
-      {isFollowing ? "Ne plus suivre" : "Suivre"}
+      {isFollow ? "Unfollow" : "Follow"}
     </button>
   );
 };
