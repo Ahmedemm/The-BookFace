@@ -41,10 +41,10 @@ const UserProfileUpdate: React.FC<UserProfileUpdateProps> = ({
 
   return (
     <div>
-      <h1>Mise à jour du profil</h1>
+      <h1>Profil updates</h1>
       <form onSubmit={handleSubmit}>
         {/* ... (comme précédemment) */}
-        <button type="submit">Enregistrer les modifications</button>
+        <button type="submit">Register modifications</button>
       </form>
     </div>
   );
