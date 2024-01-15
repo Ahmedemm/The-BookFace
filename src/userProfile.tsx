@@ -1,5 +1,5 @@
 import React from "react";
-import FollowButton from "./follow";
+import FollowButton from "./Follow";
 
 interface UserProfileProps {
   username: string;

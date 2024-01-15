@@ -9,8 +9,8 @@ import {
   Avatar,
   Divider,
 } from "@mui/material";
-import Likes from "./likes";
-import FollowButton from "./follow";
+import Likes from "./Likes";
+import FollowButton from "./Follow";
 
 const posts = [
   {
@@ -61,7 +61,10 @@ const FeedPage = () => {
               </Typography>
               <Typography variant="body1">{post.content}</Typography>
               <Likes likes={post.likes} />
-              <FollowButton onFollow={() => {}} isFollowing={post.isFollowing} />
+              <FollowButton
+                onFollow={() => {}}
+                isFollowing={post.isFollowing}
+              />
             </div>
           </div>
         ))}

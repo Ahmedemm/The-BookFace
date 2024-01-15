@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NotificationModal from "./notificationsModal";
+import NotificationModal from "./NotificationsModal";
 
 interface NotificationBellProps {
   notifications: string[]; // Liste des notifications
