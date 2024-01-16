@@ -26,4 +26,4 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   );
 };
 
-export default notificationsModal;
+export default NotificationModal;
