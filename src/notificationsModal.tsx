@@ -1,7 +1,12 @@
 import React from "react";
 
+interface Notification {
+  id: number;
+  content: string;
+}
+
 interface NotificationModalProps {
-  notifications: string[]; // Liste des notifications
+  notifications: Notification[]; // Liste des notifications
   onClose: () => void; // Fonction appelée lors de la fermeture du modal
 }
 
@@ -16,11 +21,15 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           &times;
         </span>
         <h2>Notifications</h2>
-        <ul>
-          {notifications.map((notification, index) => (
-            <li key={index}>{notification.content}</li>
-          ))}
-        </ul>
+        {notifications.length === 0 ? (
+          <p>Aucune nouvelle notification</p>
+        ) : (
+          <ul>
+            {notifications.map((notification) => (
+              <li key={notification.id}>{notification.content}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

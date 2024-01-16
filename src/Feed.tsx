@@ -22,6 +22,7 @@ const posts = [
     isFollowing: true,
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. #React #WebDev",
+    showModal: true,
   },
   {
     id: 2,
@@ -30,8 +31,12 @@ const posts = [
     isFollowing: false,
     content:
       "Just launched my new website! Check it out at example.com 🚀 #WebDevelopment",
+    showModal: false,
   },
 ];
+
+
+
 
 const FeedPage = () => {
   return (
