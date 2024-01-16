@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import Likes from "./Likes";
 import FollowButton from "./Follow";
+import NotificationBell from "./NotificationsBell";
+import NotificationModal from "./NotificationsModal";
 
 const posts = [
   {
@@ -65,6 +67,10 @@ const FeedPage = () => {
                 onFollow={() => {}}
                 isFollowing={post.isFollowing}
               />
+              <NotificationBell notifications={[]}/>
+             <NotificationModal notifications={[]} onClose={function (): void {
+                throw new Error("Function not implemented.");
+              } }/>
             </div>
           </div>
         ))}
