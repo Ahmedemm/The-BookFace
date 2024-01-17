@@ -9,9 +9,9 @@ import {
   Avatar,
   Divider,
 } from "@mui/material";
-import Likes from "./Likes";
-import FollowButton from "./Follow";
-import NotificationBell from "./NotificationsBell";
+import Likes from "../components/Likes";
+import FollowButton from "../components/Follow";
+import NotificationBell from "../components/NotificationsBell";
 import { Link } from "react-router-dom";
 
 const posts = [

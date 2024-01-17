@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
+
 
 interface UserProfileUpdateProps {
   onUpdateSuccess: (profile: UserProfile) => void;
@@ -14,8 +16,7 @@ const UserProfileUpdate: React.FC<UserProfileUpdateProps> = ({
     // Ajoute d'autres champs de profil ici
   });
 
-  const history = useHistory();
-
+const navigate = useNavigate();
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {

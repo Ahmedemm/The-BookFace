@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import FollowButton from "./Follow";
-import { useHistory } from "react-router-dom";
+import FollowButton from "../components/Follow";
+import { useNavigate } from "react-router";
 
 interface UserProfileProps {
   username: string;
@@ -17,8 +17,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ username }) => {
     // Ajoute d'autres champs de profil ici
   });
 
-  const history = useHistory();
-
+  const navigate = useNavigate();
   const handleFollow = () => {
     // Logique pour effectuer le suivi ou le désabonnement de l'utilisateur
     console.log(
@@ -37,7 +36,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ username }) => {
     <div>
       <h1>{username}</h1>
       <p>Bio: {userProfile.bio}</p>
-      <p><i>photo de profile</i></p>
+      <p>
+        <i>photo de profile</i>
+      </p>
       {/* Affiche d'autres champs de profil ici */}
       <FollowButton onFollow={handleFollow} />
       <button onClick={handleUpdateClick}>Mettre à jour le profil</button>
