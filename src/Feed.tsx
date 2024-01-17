@@ -12,7 +12,7 @@ import {
 import Likes from "./Likes";
 import FollowButton from "./Follow";
 import NotificationBell from "./NotificationsBell";
-import NotificationModal from "./NotificationsModal";
+import { Link } from "react-router-dom";
 
 const posts = [
   {
@@ -22,7 +22,6 @@ const posts = [
     isFollowing: true,
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. #React #WebDev",
-    showModal: true,
   },
   {
     id: 2,
@@ -31,12 +30,8 @@ const posts = [
     isFollowing: false,
     content:
       "Just launched my new website! Check it out at example.com 🚀 #WebDevelopment",
-    showModal: false,
   },
 ];
-
-
-
 
 const FeedPage = () => {
   return (
@@ -58,6 +53,8 @@ const FeedPage = () => {
         <Button variant="contained" color="primary" style={{ marginTop: 10 }}>
           Poster
         </Button>
+        <Link to="/login">Login</Link>
+
         <Divider style={{ margin: "20px 0" }} />
         {posts.map((post) => (
           <div key={post.id} style={{ marginBottom: 20 }}>
@@ -72,10 +69,7 @@ const FeedPage = () => {
                 onFollow={() => {}}
                 isFollowing={post.isFollowing}
               />
-              <NotificationBell notifications={[]}/>
-              <NotificationModal notifications={[]} onClose={function (): void {
-                throw new Error("Function not implemented.");
-              } }/>
+              <NotificationBell notifications={[]} />
             </div>
           </div>
         ))}
