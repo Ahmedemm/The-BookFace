@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
-import { Container, Paper, Typography, TextField, Button, Avatar } from '@mui/material';
+import React, { useState } from "react";
+import {
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Avatar,
+} from "@mui/material";
+import axios from "axios";
 
 const RegisterPage: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [dateOfBirth, setDateOfBirth] = useState<string>('');
+  const [dateOfBirth, setDateOfBirth] = useState<string>("");
   const [isOver16, setIsOver16] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [nom, setNom] = useState<string>("");
+  const [prenom, setPrenom] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -12,9 +25,10 @@ const RegisterPage: React.FC = () => {
     }
   };
 
-  const handleDateOfBirthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDateOfBirthChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setDateOfBirth(event.target.value);
-    // Vous pouvez également ajouter une validation de date de naissance ici
     const age = calculateAge(event.target.value);
     setIsOver16(age >= 16);
   };
@@ -25,30 +39,82 @@ const RegisterPage: React.FC = () => {
     let age = today.getFullYear() - birthDateObj.getFullYear();
     const monthDiff = today.getMonth() - birthDateObj.getMonth();
 
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDateObj.getDate())
+    ) {
       age--;
     }
 
     return age;
   };
 
+  const handleRegistration = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:3001/register", {
+        username,
+        nom,
+        prenom,
+        email,
+        password,
+        dateOfBirth,
+      });
+
+      if (response.status === 201) {
+        // L'inscription a réussi, redirige l'utilisateur vers la page de connexion
+        window.location.href = "/login";
+      } else {
+        // Gérer les erreurs de l'API
+        console.error(response.data.error);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la requête vers le serveur:", error);
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xs">
-      <Typography variant="h5" style={{ textAlign: 'center' }}>
+      <Typography variant="h5" style={{ textAlign: "center" }}>
         Inscription
       </Typography>
-      <Paper elevation={3} style={{ padding: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Avatar src={selectedFile ? URL.createObjectURL(selectedFile) : undefined} style={{ width: 60, height: 60, marginBottom: 10 }} />
-        <form style={{ width: '100%', marginTop: 20 }}>
+      <Paper
+        elevation={3}
+        style={{
+          padding: 20,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar
+          src={selectedFile ? URL.createObjectURL(selectedFile) : undefined}
+          style={{ width: 60, height: 60, marginBottom: 10 }}
+        />
+        <form
+          style={{ width: "100%", marginTop: 20 }}
+          onSubmit={handleRegistration}
+        >
           <input
             accept="image/*"
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             id="profile-picture-input"
             type="file"
             onChange={handleFileChange}
           />
           <label htmlFor="profile-picture-input">
-            <Button variant="outlined" component="span" style={{ marginBottom: 10, alignItems: 'center', display: 'flex' }}>
+            <Button
+              variant="outlined"
+              component="span"
+              style={{
+                marginBottom: 10,
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
               Ajouter une photo
             </Button>
           </label>
@@ -61,6 +127,8 @@ const RegisterPage: React.FC = () => {
             label="Username"
             name="username"
             autoComplete="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -71,6 +139,8 @@ const RegisterPage: React.FC = () => {
             label="Nom"
             name="Nom"
             autoComplete="Nom"
+            value={nom}
+            onChange={(e) => setNom(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -81,6 +151,8 @@ const RegisterPage: React.FC = () => {
             label="Prenom"
             name="Prenom"
             autoComplete="Prenom"
+            value={prenom}
+            onChange={(e) => setPrenom(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -92,6 +164,8 @@ const RegisterPage: React.FC = () => {
             type="email"
             id="email"
             autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -103,6 +177,8 @@ const RegisterPage: React.FC = () => {
             type="password"
             id="password"
             autoComplete="new-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -123,7 +199,14 @@ const RegisterPage: React.FC = () => {
               Vous devez avoir au moins 16 ans pour vous inscrire.
             </Typography>
           )}
-          <Button type="submit" fullWidth variant="contained" color="primary" style={{ marginTop: 20 }} disabled={!isOver16}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            style={{ marginTop: 20 }}
+            disabled={!isOver16}
+          >
             Register
           </Button>
         </form>

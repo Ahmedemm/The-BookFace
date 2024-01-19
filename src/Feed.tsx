@@ -1,5 +1,4 @@
-// FeedPage.js
-
+import React, { useState } from "react";
 import {
   Container,
   Paper,
@@ -9,8 +8,8 @@ import {
   Avatar,
   Divider,
 } from "@mui/material";
-import Likes from "./Likes";
-import FollowButton from "./Follow";
+import Likes from "./likes";
+import FollowButton from "./follow";
 
 const posts = [
   {
@@ -31,7 +30,40 @@ const posts = [
   },
 ];
 
+const Post = ({ post }) => (
+  <div style={{ marginBottom: 20 }}>
+    <Avatar style={{ marginRight: 10 }}>{post.username[0]}</Avatar>
+    <div>
+      <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
+        {post.username}
+      </Typography>
+      <Typography variant="body1">{post.content}</Typography>
+      <Likes likes={post.likes} />
+      <FollowButton onFollow={() => {}} isFollowing={post.isFollowing} />
+    </div>
+  </div>
+);
+
 const FeedPage = () => {
+  const [postData, setPostData] = useState({ content: "" });
+
+  const handlePost = async () => {
+    try {
+      const response = await fetch("/api/addpost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <Container component="main" maxWidth="sm">
       <Paper elevation={3} style={{ padding: 20, marginTop: 20 }}>
@@ -48,25 +80,17 @@ const FeedPage = () => {
           multiline
           rows={4}
         />
-        <Button variant="contained" color="primary" style={{ marginTop: 10 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 10 }}
+          onClick={handlePost}
+        >
           Poster
         </Button>
         <Divider style={{ margin: "20px 0" }} />
         {posts.map((post) => (
-          <div key={post.id} style={{ marginBottom: 20 }}>
-            <Avatar style={{ marginRight: 10 }}>{post.username[0]}</Avatar>
-            <div>
-              <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
-                {post.username}
-              </Typography>
-              <Typography variant="body1">{post.content}</Typography>
-              <Likes likes={post.likes} />
-              <FollowButton
-                onFollow={() => {}}
-                isFollowing={post.isFollowing}
-              />
-            </div>
-          </div>
+          <Post key={post.id} post={post} />
         ))}
       </Paper>
     </Container>
