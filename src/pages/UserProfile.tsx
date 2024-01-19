@@ -11,7 +11,7 @@ interface UserProfileData {
   // Ajoute d'autres champs de profil ici
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ username }) => {
+const UserProfile: React.FC = ({ username }) => {
   const [userProfile, setUserProfile] = useState<UserProfileData>({
     bio: "",
     // Ajoute d'autres champs de profil ici
@@ -29,8 +29,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ username }) => {
 
   const handleUpdateClick = () => {
     // Redirige l'utilisateur vers la page de mise à jour du profil
-    history.push("/update-profile");
+    // history.push("/update-profile");
   };
+
+  return null;
 
   return (
     <div>
@@ -40,7 +42,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ username }) => {
         <i>photo de profile</i>
       </p>
       {/* Affiche d'autres champs de profil ici */}
-      <FollowButton onFollow={handleFollow} />
+      <FollowButton onFollow={handleFollow} isFollowing />
       <button onClick={handleUpdateClick}>Mettre à jour le profil</button>
     </div>
   );

@@ -13,6 +13,7 @@ import Likes from "../components/Likes";
 import FollowButton from "../components/Follow";
 import NotificationBell from "../components/NotificationsBell";
 import { Link } from "react-router-dom";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 const posts = [
   {
@@ -32,14 +33,22 @@ const posts = [
       "Just launched my new website! Check it out at example.com 🚀 #WebDevelopment",
   },
 ];
-
 const FeedPage = () => {
+  const signOut = useSignOut();
+  const onLogout = () => {
+    signOut();
+  };
+
   return (
     <Container component="main" maxWidth="sm">
       <Paper elevation={3} style={{ padding: 20, marginTop: 20 }}>
         <Typography variant="h5" style={{ marginBottom: 10 }}>
           Feed
         </Typography>
+        <Link to="/login" onClick={onLogout}>
+          Logout
+        </Link>
+
         <TextField
           variant="outlined"
           margin="normal"
@@ -53,7 +62,6 @@ const FeedPage = () => {
         <Button variant="contained" color="primary" style={{ marginTop: 10 }}>
           Poster
         </Button>
-        <Link to="/login">Login</Link>
 
         <Divider style={{ margin: "20px 0" }} />
         {posts.map((post) => (
